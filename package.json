@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "tsc && npm run copy-python",
-    "copy-python": "rsync -av lib/handlers/python/ dist/handlers/python --include='*/' --include='*.py' --exclude='*'",
+    "copy-python": "rsync -av lib/handlers/python/ dist/handlers/python --include='*/' --include='*.py' --include='requirements.txt' --exclude='*'",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
