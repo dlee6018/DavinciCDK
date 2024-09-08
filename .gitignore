@@ -6,3 +6,9 @@ node_modules
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+/dist
+/lib/handlers/python/venv/
+/lib/handlers/python/lambdas/dependency
+
+.DS_Store

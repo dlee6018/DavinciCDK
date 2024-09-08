@@ -2,7 +2,6 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
 import * as lambda from "aws-cdk-lib/aws-lambda";
-
 export class LambdaStack extends cdk.Stack {
   public readonly helloLambdaFunction: lambda.Function;
 
@@ -17,7 +16,9 @@ export class LambdaStack extends cdk.Stack {
     this.helloLambdaFunction = new lambda.Function(this, `HelloWorldFunction`, {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: "helloLambda.handler",
-      code: lambda.Code.fromAsset(path.join(__dirname, "../handlers")),
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../handlers/typescript/lambdas")
+      ),
       functionName: `HelloWorldFunction-${stageName}`,
       memorySize: 1024,
       timeout: cdk.Duration.seconds(30),

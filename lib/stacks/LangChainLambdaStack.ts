@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as path from "path";
+import { PythonFunction } from "@aws-cdk/aws-lambda-python-alpha";
 
 export class LangChainLambdaStack extends cdk.Stack {
   public readonly generateMCQLambda: lambda.Function;
@@ -15,17 +16,12 @@ export class LangChainLambdaStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
-    this.helloLambdaFunction = new lambda.Function(this, `HelloWorldFunction`, {
-      runtime: lambda.Runtime.NODEJS_20_X,
-      handler: "helloLambda.handler",
-      code: lambda.Code.fromAsset(path.join(__dirname, "../handlers")),
-      functionName: `HelloWorldFunction-${stageName}`,
-      memorySize: 1024,
-      timeout: cdk.Duration.seconds(30),
-      description: `Updated at ${new Date().toISOString()}`,
-      environment: {
-        UPDATE_TIME: new Date().toISOString(),
-      },
+    this.helloLambdaFunction = new PythonFunction(this, "MyFunction", {
+      entry: path.join(__dirname, "../handlers/python/lambdas/hello_lambda"),
+      runtime: lambda.Runtime.PYTHON_3_9,
+      index: "main.py",
+      handler: "handler",
+      functionName: `LangChainHelloLambda-${stageName}`,
     });
   }
 }
